@@ -1,9 +1,9 @@
-use std::{fmt::Display, vec};
+use std::fmt::Display;
 
 pub struct BugReport<'a> {
-    title: &'a str,
-    reporter: &'a str,
-    desc: &'a str
+    pub title: &'a str,
+    pub reporter: &'a str,
+    pub desc: &'a str
 }
 
 pub struct BugAnalyzer<T: Categorize + Summarize> {
@@ -87,27 +87,23 @@ impl<'a> Categorize for BugReport<'a> {
 }
 
 impl<T: Summarize + Categorize + Display> BugAnalyzer<T> {
-    fn new(&self) -> BugAnalyzer<T> {
+    pub fn new() -> BugAnalyzer<T> {
         BugAnalyzer {
             reports: Vec::new()
         }
     }
 
-    fn add_reports(&mut self, report: T) -> () {
+    pub fn add_reports(&mut self, report: T) -> () {
         self.reports.push(report);
     }
 
-    fn analyze_all(&self) -> () {
+    pub fn analyze_all(&self) -> () {
         for report in &self.reports {
             println!("{}", report);
             println!("category: {}", report.categorize());
             println!("severity: {}", report.severity());
             println!("____________________________________")
         }
-    }
-
-    fn count_by_category(&self) -> () {
-        //body
     }
 }
 
